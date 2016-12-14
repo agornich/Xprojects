@@ -1,0 +1,562 @@
+/*
+ * Author       : Anna Górnich
+ * Generated on : 14-Dec-2016 13:52:45 PST
+ * Version      : 3.0
+ */
+application "X Projects"
+{
+    date format = "dd-MM-yyyy"
+    time zone = "Europe/Warsaw"
+    section Formularz_rejestracji_projektu_X
+    {
+        displayname = "Formularz rejestracji projektu X"
+        form  Formularz_rejestracji_projektu_X
+        {
+            displayname  =  "Formularz rejestracji projektu X"
+            captcha = true
+            success message  =  "Data Added Successfully!"
+            field alignment = left
+            
+            must  have  Dystrybucja
+            (
+                type  =  picklist
+                values  =  {"Empty",   "Epa Systemy",   "Konsorcjum FEN"}
+                width  =  206px
+            )
+
+            must  have  Osoba_odpowiedzialna_w_dystrybucji1
+            (
+                displayname  =  "Osoba odpowiedzialna w dystrybucji"
+                type  =  text
+                width  =  200px
+            )
+
+            plain
+            (
+                type  =  plaintext
+                value = "<font color=\"#3333ff\">Dane klienta końcowego</font>\n"
+            )
+
+            must  have  Nazwa_firmy
+            (
+                displayname  =  "Nazwa Firmy"
+                type  =  text
+                width  =  450px
+            )
+
+            must  have  unique  NIP_10_cyfr_pisanych_ci_giem
+            (
+                displayname  =  "NIP (np. 1234567890)"
+                type  =  number
+                width  =  100px
+            )
+
+            must  have  Osoba_kontaktowa
+            (
+                displayname  =  "Imię i nazwisko osoby kontaktowej"
+                type  =  text
+                width  =  200px
+            )
+
+            must  have  E_mail
+            (
+                displayname  =  "E-mail"
+                type  =  email
+                width  =  200px
+            )
+
+            Telefon
+            (
+                type  =  text
+                width  =  200px
+            )
+
+            plain1
+            (
+                type  =  plaintext
+                value = "<font color=\"#3333ff\">Dane partnera</font>\n"
+            )
+
+            Nazwa_firmy1
+            (
+                displayname  =  "Nazwa firmy"
+                type  =  text
+                width  =  450px
+            )
+
+            Imi_i_nazwisko_osoby_kontaktowej1
+            (
+                displayname  =  "Imię i nazwisko osoby kontaktowej"
+                type  =  text
+                width  =  200px
+            )
+
+            E_mail1
+            (
+                displayname  =  "E-mail"
+                type  =  email
+                width  =  200px
+            )
+
+            Telefon1
+            (
+                displayname  =  "Telefon"
+                type  =  text
+                width  =  200px
+            )
+
+            plain2
+            (
+                type  =  plaintext
+                value = "<font color=\"#3333ff\">Informacje o projekcie</font>\n"
+            )
+
+            Planowana_data_realizacji
+            (
+                displayname  =  "Planowana data realizacji"
+                type  =  date
+                width  =  130px
+                alloweddays = 0,1,2,3,4,5,6
+            )
+
+            Rozwi_zanie
+            (
+                displayname  =  "Rozwiązanie"
+                type  =  list
+                values  =  {"X QNAP Appliance",   "X Backup&Restore",   "X Cloud",   "X Backup eXpert",   "X Hybrid",   "X Backup&amp;Restore"}
+                height  =  60px
+                width  =  206px
+                on user input
+                {
+                    if (input.Rozwi_zanie.toString()  ==  "X QNAP Appliance")
+                    {
+                        hide X_Backup_eXpert_storage_in_GB;
+                        hide X_Cloud_Storage_GB;
+                        show Endpoint_Agent;
+                        show Server_Agent_Pro;
+                        show Virtual_Agent_Hyper_V;
+                        show Virtual_Agent_VMware;
+                        show Server_Agent_Basic;
+                        show X_Hybrid_storage_in_GB;
+                    }
+                    if (input.Rozwi_zanie.toString()  ==  "X Backup&Restore")
+                    {
+                        hide X_Cloud_Storage_GB;
+                        hide X_Backup_eXpert_storage_in_GB;
+                        show Endpoint_Agent;
+                        show Server_Agent_Pro;
+                        show Virtual_Agent_Hyper_V;
+                        show Virtual_Agent_VMware;
+                        show Server_Agent_Basic;
+                        show X_Hybrid_storage_in_GB;
+                    }
+                    if (input.Rozwi_zanie.toString()  ==  "X Cloud")
+                    {
+                        show X_Cloud_Storage_GB;
+                        hide X_Backup_eXpert_storage_in_GB;
+                        hide Endpoint_Agent;
+                        hide Server_Agent_Pro;
+                        hide plain3;
+                        hide Virtual_Agent_Hyper_V;
+                        hide Virtual_Agent_VMware;
+                        hide Server_Agent_Basic;
+                        hide X_Hybrid_storage_in_GB;
+                    }
+                    if (input.Rozwi_zanie.toString()  ==  "X Backup eXpert")
+                    {
+                        hide X_Cloud_Storage_GB;
+                        show X_Backup_eXpert_storage_in_GB;
+                        hide Endpoint_Agent;
+                        hide Server_Agent_Pro;
+                        hide Virtual_Agent_Hyper_V;
+                        hide Virtual_Agent_VMware;
+                        hide Server_Agent_Basic;
+                        hide X_Hybrid_storage_in_GB;
+                        hide plain3;
+                    }
+                    if (input.Rozwi_zanie.toString()  ==  "X Hybrid")
+                    {
+                        hide X_Cloud_Storage_GB;
+                        hide X_Backup_eXpert_storage_in_GB;
+                        hide Endpoint_Agent;
+                        hide Server_Agent_Pro;
+                        hide Virtual_Agent_Hyper_V;
+                        hide Virtual_Agent_VMware;
+                        hide Server_Agent_Basic;
+                        show X_Hybrid_storage_in_GB;
+                        hide plain3;
+                    }
+                }
+            )
+
+            plain3
+            (
+                type  =  plaintext
+                value = "<font color=\"#3333ff\">Licencje (przy niepotrzebnych wstaw 0)</font>\n"
+            )
+
+            Endpoint_Agent
+            (
+                displayname  =  "Endpoint Agent"
+                type  =  number
+                width  =  100px
+            )
+
+            Server_Agent_Basic
+            (
+                displayname  =  "Server Agent Basic"
+                type  =  number
+                width  =  100px
+            )
+
+            Server_Agent_Pro
+            (
+                displayname  =  "Server Agent Pro"
+                type  =  number
+                width  =  100px
+            )
+
+            Virtual_Agent_VMware
+            (
+                displayname  =  "Virtual Agent VMware"
+                type  =  number
+                width  =  100px
+            )
+
+            Virtual_Agent_Hyper_V
+            (
+                displayname  =  "Virtual Agent Hyper-V"
+                type  =  number
+                maxchar  =  8
+                width  =  100px
+            )
+
+            X_Cloud_Storage_GB
+            (
+                displayname  =  "X Cloud (storage in GB)"
+                type  =  number
+                width  =  100px
+            )
+
+            X_Backup_eXpert_storage_in_GB
+            (
+                displayname  =  "X Backup eXpert (storage in GB)"
+                type  =  number
+                width  =  100px
+            )
+
+            X_Hybrid_storage_in_GB
+            (
+                displayname  =  "X Hybrid (storage in GB)"
+                type  =  text
+                maxchar  =  254
+                width  =  200px
+            )
+
+            plain7
+            (
+                type  =  plaintext
+                value = "<font color=\"#3333ff\">Potwierdzienie</font>\n"
+            )
+
+            Adres_e_mail_na_kt_ry_ma_przyj_potwierdzenie
+            (
+                displayname  =  "Adres e-mail, na który ma przyjść potwierdzenie"
+                type  =  email
+                width  =  200px
+            )
+
+            Status_Projektu
+            (
+                displayname  =  "Status Projektu"
+                type  =  picklist
+                private  =  true
+                values  =  {"Oczekujący",   "Potwierdzony",   "Zajęty"}
+                initial value  =  "Oczekujący"
+                width  =  200px
+            )
+
+            Project_lifecycle
+            (
+                displayname  =  "Project lifecycle"
+                type  =  picklist
+                values  =  {"Otwarty",   "Wygrany",   "Przegrany"}
+                initial value  =  "Otwarty"
+                width  =  200px
+            )
+
+            actions
+            {
+                on add
+                {
+                    submit
+                    (
+                        type  =  submit
+                        displayname  =  "Submit"
+                        PreSubmit = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><preoncommit><successmsg><type><![CDATA[sucmsgtimeout]]></type><value><![CDATA[Data Added Successfully!]]></value><timeout><![CDATA[2]]></timeout></successmsg><openurl/></preoncommit>\n"
+                    )
+                    reset
+                    (
+                        type  =  reset
+                        displayname  =  "Reset"
+                    )
+                }
+                on edit
+                {
+                    update
+                    (
+                        type  =  submit
+                        displayname  =  "Update"
+                        on validate
+                        {
+                            if ((input.Status_Projektu  ==  "Potwierdzony")  &&  (input.Dystrybucja  ==  "Epa Systemy"))
+                            {
+                                //dane wypełniające pole Organization w crm
+                                organization = zoho.crm.create(("Accounts"), { ("Account Name") : input.Nazwa_firmy, "E-mail" : input.E_mail, "Phone" : input.Telefon, ("Account Name") : input.Nazwa_firmy, "NIP" : input.NIP_10_cyfr_pisanych_ci_giem });
+                                //utworzenie zmiennej zawierającej w sobie nazwę firmu + opis
+                                deal_name = input.Nazwa_firmy + " - szanasa sprzedaży";
+                                // stworzenie zmiennej z domyślną zawartością uzupełniającą pole Stage w crm
+                                stage = "Idea/Lead";
+                                dystrybutor = "Systemy Epa";
+                                //dane wypełniające pole Potentials w crm
+                                potentials = zoho.crm.create("potentials", { ("Account Name") : input.Nazwa_firmy, "Potential Name" : deal_name, "Stage" : stage, "close date" : input.Planowana_data_realizacji, "dystrybutor" : dystrybutor });
+                                //dane wypełniające pole People w crm
+                                people = zoho.crm.create("Contacts", { "Last Name" : input.Osoba_kontaktowa, "Email" : input.E_mail, "Phone" : input.Telefon, ("Account Name") : input.Nazwa_firmy });
+                                sendmail
+                                (
+                                    To       :  input.Adres_e_mail_na_kt_ry_ma_przyj_potwierdzenie 
+                                    From     :  zoho.adminuserid 
+                                    Subject  :  "Rejestracja projektu X" 
+                                    Message  :  "Drogi użytkowniku Twój projekt na " + input.Nazwa_firmy + " (ID: " + input.ID + ") został potwierdzony.<br><br> Pozdrawiamy,<br> X Team " 
+                                )
+                            }
+                            else if ((input.Status_Projektu  ==  "Potwierdzony")  &&  (input.Dystrybucja  ==  "Konsorcjum FEN"))
+                            {
+                                //dane wypełniające pole Organization w crm
+                                organization = zoho.crm.create(("Accounts"), { ("Account Name") : input.Nazwa_firmy, "E-mail" : input.E_mail, "Phone" : input.Telefon, ("Account Name") : input.Nazwa_firmy, "NIP" : input.NIP_10_cyfr_pisanych_ci_giem });
+                                //utworzenie zmiennej zawierającej w sobie nazwę firmu + opis
+                                deal_name = input.Nazwa_firmy + " - szanasa sprzedaży";
+                                // stworzenie zmiennej z domyślną zawartością uzupełniającą pole Stage w crm
+                                stage = "Idea/Lead";
+                                dystrybutor = "Konsorcjum FEN";
+                                //dane wypełniaające pole Potentials w crm
+                                potentials = zoho.crm.create("potentials", { ("Account Name") : input.Nazwa_firmy, "Potential Name" : deal_name, "Stage" : stage, "close date" : input.Planowana_data_realizacji, "dystrybutor" : dystrybutor });
+                                //dane wypełniające pole People w crm
+                                people = zoho.crm.create("Contacts", { "Last Name" : input.Osoba_kontaktowa, "Email" : input.E_mail, "Phone" : input.Telefon, ("Account Name") : input.Nazwa_firmy });
+                                sendmail
+                                (
+                                    To       :  input.Adres_e_mail_na_kt_ry_ma_przyj_potwierdzenie 
+                                    From     :  zoho.adminuserid 
+                                    Subject  :  "Rejestracja projektu X" 
+                                    Message  :  "Drogi użytkowniku Twój projekt na " + input.Nazwa_firmy + " (ID: " + input.ID + ") został potwierdzony.<br><br> Pozdrawiamy,<br> X Team " 
+                                )
+                            }
+                            else if ((input.Status_Projektu  ==  "Zajęty")  &&  (input.Dystrybucja  ==  "Epa Systemy"))
+                            {
+                                sendmail
+                                (
+                                    To       :  input.Adres_e_mail_na_kt_ry_ma_przyj_potwierdzenie 
+                                    From     :  zoho.adminuserid 
+                                    Subject  :  "Rejestracja projektu X" 
+                                    Message  :  "Drogi użytkowniku, Twój projekt na " + input.Nazwa_firmy + " niestety jest zajęty. <br><br> Pozdrawiamy,<br> X Team " 
+                                )
+                            }
+                            else if ((input.Status_Projektu  ==  "Zajęty")  &&  (input.Dystrybucja  ==  "Konsorcjum FEN"))
+                            {
+                                sendmail
+                                (
+                                    To       :  input.Adres_e_mail_na_kt_ry_ma_przyj_potwierdzenie 
+                                    From     :  zoho.adminuserid 
+                                    Subject  :  "Rejestracja projektu X" 
+                                    Message  :  "Drogi użytkowniku, Twój projekt na " + input.Nazwa_firmy + " niestety jest zajęty. <br><br> Pozdrawiamy,<br> X Team " 
+                                )
+                            }
+                            else
+                            {
+                            }
+                        }
+                    )
+                    cancel
+                    (
+                        type  =  cancel
+                        displayname  =  "Cancel"
+                    )
+                }
+            }
+                    }
+
+        list  Rejestracje_projekt_w
+        {
+            displayname = "Rejestracje projektów"
+            show  all  rows  from  Formularz_rejestracji_projektu_X 
+            (
+                ID
+                Status_Projektu as "Status Projektu"
+                Dystrybucja
+                Nazwa_firmy as "Nazwa firmy"
+                NIP_10_cyfr_pisanych_ci_giem as "NIP (np. 1234567890)"
+                Osoba_kontaktowa as "Imię i nazwisko osoby kontaktowej"
+                Telefon
+                E_mail as "E-mail"
+                Nazwa_firmy1 as "Nazwa firmy"
+                Imi_i_nazwisko_osoby_kontaktowej1 as "Imi�� i nazwisko osoby kontaktowej"
+                E_mail1 as "E-mail"
+                Telefon1 as "Telefon"
+                Planowana_data_realizacji as "Planowana data realizacji"
+                Rozwi_zanie as "Rozwiązanie"
+                Endpoint_Agent as "Endpoint Agent"
+                Server_Agent_Basic as "Server Agent Basic"
+                Server_Agent_Pro as "Server Agent Pro"
+                Virtual_Agent_VMware as "Virtual Agent VMware"
+                Virtual_Agent_Hyper_V as "Virtual Agent Hyper-V"
+                X_Backup_eXpert_storage_in_GB as "X Backup eXpert (storage in GB)"
+                X_Cloud_Storage_GB as "XX Cloud (storage in GB)"
+                X_Hybrid_storage_in_GB as "X Hybrid (storage in GB)"
+                Project_lifecycle as "Project lifecycle"
+                Added_Time as "Added Time"
+            )
+            options
+            (
+                menu alignment = left and right
+            )
+        }
+
+        list  Epa_Systemy
+        {
+            displayname = "Epa Systemy"
+            show  all  rows  from  Formularz_rejestracji_projektu_X [Dystrybucja == "Epa Systemy"]
+            (
+                ID
+                Dystrybucja
+                Nazwa_firmy as "Nazwa firmy"
+                Osoba_kontaktowa as "Imię i nazwisko osoby kontaktowej"
+                E_mail as "E-mail"
+                Telefon
+                NIP_10_cyfr_pisanych_ci_giem as "NIP (10 cyfr pisanych ciągiem)"
+                Nazwa_firmy1 as "Nazwa firmy"
+                Imi_i_nazwisko_osoby_kontaktowej1 as "Imię i nazwisko osoby kontaktowej"
+                E_mail1 as "E-mail"
+                Telefon1 as "Telefon"
+                Planowana_data_realizacji as "Planowana data realizacji"
+                Endpoint_Agent as "Endpoint Agent"
+                Rozwi_zanie as "Rozwiązanie"
+                Server_Agent_Pro as "Server Agent Pro"
+                Virtual_Agent_VMware as "Virtual Agent VMware"
+                Virtual_Agent_Hyper_V as "Virtual Agent Hyper-V"
+                Server_Agent_Basic as "Server Agent Basic"
+                X_Backup_eXpert_storage_in_GB as "X Backup eXpert (storage in GB)"
+                X_Cloud_Storage_GB as "X Cloud (storage in GB)"
+                X_Hybrid_storage_in_GB as "X Hybrid (storage in GB)"
+                Project_lifecycle as "Project lifecycle"
+                Added_Time as "Added Time"
+            )
+            options
+            (
+                menu alignment = left and right
+            )
+        }
+
+        list  Copy_of_Epa_Systemy
+        {
+            displayname = "Konsorcjum FEN"
+            show  all  rows  from  Formularz_rejestracji_projektu_X [Dystrybucja == "Konsorcjum FEN"]
+            (
+                ID
+                Nazwa_firmy as "Nazwa firmy"
+                Osoba_kontaktowa as "Imię i nazwisko osoby kontaktowej"
+                E_mail as "E-mail"
+                Telefon
+                NIP_10_cyfr_pisanych_ci_giem as "NIP (10 cyfr pisanych ciągiem)"
+                Nazwa_firmy1 as "Nazwa firmy"
+                Imi_i_nazwisko_osoby_kontaktowej1 as "Imię i nazwisko osoby kontaktowej"
+                E_mail1 as "E-mail"
+                Telefon1 as "Telefon"
+                Planowana_data_realizacji as "Planowana data realizacji"
+                Dystrybucja
+                Rozwi_zanie as "Rozwiązanie"
+                Endpoint_Agent as "Endpoint Agent"
+                Server_Agent_Basic as "Server Agent Basic"
+                Server_Agent_Pro as "Server Agent Pro"
+                Virtual_Agent_Hyper_V as "Virtual Agent Hyper-V"
+                Virtual_Agent_VMware as "Virtual Agent VMware"
+                X_Backup_eXpert_storage_in_GB as "X Backup eXpert (storage in GB)"
+                X_Cloud_Storage_GB as "X Cloud (storage in GB)"
+                X_Hybrid_storage_in_GB as "X Hybrid (storage in GB)"
+                Project_lifecycle as "Project lifecycle"
+                Added_Time as "Added Time"
+            )
+            options
+            (
+                menu alignment = left and right
+            )
+        }
+
+        list  Test
+        {
+            show  all  rows  from  Formularz_rejestracji_projektu_X [Dystrybucja == "Empty"]
+            (
+                Dystrybucja
+                Nazwa_firmy as "Nazwa Firmy"
+                NIP_10_cyfr_pisanych_ci_giem as "NIP (np. 1234567890)"
+                Osoba_kontaktowa as "Imię i nazwisko osoby kontaktowej"
+                E_mail as "E-mail"
+                Telefon
+                Nazwa_firmy1 as "Nazwa firmy"
+                Imi_i_nazwisko_osoby_kontaktowej1 as "Imię i nazwisko osoby kontaktowej"
+                E_mail1 as "E-mail"
+                Telefon1 as "Telefon"
+                Planowana_data_realizacji as "Planowana data realizacji"
+                Rozwi_zanie as "Rozwiązanie"
+                Endpoint_Agent as "Endpoint Agent"
+                Server_Agent_Basic as "Server Agent Basic"
+                Server_Agent_Pro as "Server Agent Pro"
+                Virtual_Agent_VMware as "Virtual Agent VMware"
+                Virtual_Agent_Hyper_V as "Virtual Agent Hyper-V"
+                X_Cloud_Storage_GB as "X Cloud (storage in GB)"
+                X_Backup_eXpert_storage_in_GB as "X Backup eXpert (storage in GB)"
+                X_Hybrid_storage_in_GB as "X Hybrid (storage in GB)"
+                Project_lifecycle as "Project lifecycle"
+            )
+            options
+            (
+                menu alignment = left and right
+            )
+        }
+
+    }
+
+    customize
+    {
+        layout = "tab"
+        base theme = "professional"
+        color = "black"
+        new theme = 1
+        icon type = 3
+        icon name = "XP"
+        icon theme = "blue"
+    }
+    share_settings
+    {
+		"Administrator"
+		{
+			name = "Administrator"
+			type = Users_Permissions
+			permissions = {Chat:true, Predefined:true}
+
+		}
+		"Member"
+		{
+			name = "Member"
+			type = Users_Permissions
+			permissions = {Chat:false, Predefined:true}
+
+		}
+		"User"
+		{
+			name = "User"
+			type = Users_Permissions
+			permissions = {Chat:false, Predefined:true}
+
+		}
+    }
+}
